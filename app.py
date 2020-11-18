@@ -6,6 +6,7 @@ port = int(os.environ['PORT'])
 username = os.environ['USERNAME']
 password = os.environ['PASSWORD']
 topic = os.environ['TOPIC']
+mode_file = os.environ['MODE']
 
 if topic is None:
     topic = "#"
@@ -31,8 +32,9 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     print(msg.payload.decode())
-    f = open("mqtt_client.dump", "w")
+    f = open("mqtt_client.dump", mode_file)
     f.write(msg.payload.decode())
+    f.write("\n")
     f.close()
     
 client = mqtt.Client()

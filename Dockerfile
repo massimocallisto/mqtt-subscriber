@@ -18,6 +18,7 @@ ENV PORT "1883"
 ENV USERNAME $a
 ENV PASSWORD $a
 ENV TOPIC "#"
+ENV MODE "a"
 
 
 # command to run on container start
