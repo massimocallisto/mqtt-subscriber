@@ -1,12 +1,14 @@
+import datetime
+import time
+
 import paho.mqtt.client as mqtt
 import os
  
-server_addr =os.environ['SERVER_ADDR']
-port = int(os.environ['PORT'])
-username = os.environ['USERNAME']
-password = os.environ['PASSWORD']
-topic = os.environ['TOPIC']
-mode_file = os.environ['MODE']
+server_addr =os.getenv('SERVER_ADDR', "")
+port = int(os.getenv('PORT', ""))
+username = os.getenv('USERNAME', "")
+password = os.getenv('PASSWORD', "")
+topic = os.getenv('TOPIC', "")
 
 if topic is None:
     topic = "#"
@@ -31,16 +33,14 @@ def on_connect(client, userdata, flags, rc):
   client.subscribe(topic)
 
 def on_message(client, userdata, msg):
-    print(msg.payload.decode())
-    f = open("mqtt_client.dump", mode_file)
-    f.write(msg.payload.decode())
-    f.write("\n")
-    f.close()
-    
+    print("***** " + datetime.datetime.now().isoformat())
+    print(f"topic: {msg.topic}\nmessage:\n {msg.payload.decode()}")
+
+
 client = mqtt.Client()
 
 if username is not None and password is not None:
-    client.username_pw_set("user", "user")
+    client.username_pw_set(username, password)
 
 client.connect(broker,port,timelive)
 client.on_connect = on_connect
