@@ -7,6 +7,7 @@ export PORT=1883
 #export USERNAME=
 #export PASSWORD=
 export TOPIC=#
+export HANDLER=console
 
 if [ -f ".env" ]; then
   echo "override variables from .env file"
